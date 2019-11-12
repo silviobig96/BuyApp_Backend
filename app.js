@@ -24,6 +24,8 @@ app.use(express.urlencoded({ extended:true }));
 //rutas
 
 app.use(require('./routes/usuario'));
+app.use(require('./routes/login'));
+app.use(require('./routes/post_sugerencia'));
 
 //middleware para vue.js del modo history
 const history = require('connect-history-api-fallback');
