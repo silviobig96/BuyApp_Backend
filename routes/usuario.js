@@ -41,7 +41,7 @@ router.post('/new_usuario',async (req,res) =>{
 });
 
 //buscar un usuario
-router.get('/buscar_usuario/:id', async(req,res) => {
+router.get('/buscar_usuario/:id',verificar_auth, async(req,res) => {
     const _id = req.params.id;
 
     try {

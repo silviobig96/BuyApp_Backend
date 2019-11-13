@@ -39,6 +39,20 @@ router.get('/get_sugerencias', async (req, res) => {
     }
 });
 
+//Get de una sugerencia
+router.get('/get_sugerencia/:id', async (req, res) => {
+    const _id = req.params.id;
+    try {
+        const post_sugerenciaDB = await Post_sugerencia.findById(_id);
+        res.json(post_sugerenciaDB);
+    } catch (error) {
+        return res.status(400).json({
+            mensaje: 'Ocurrio un error',
+            error
+          });
+    }
+});
+
 //actualizar sugerencia
 router.put('/act_sugerencia/:id', verificar_auth, async (req, res) => {
     const _id = req.params.id;
