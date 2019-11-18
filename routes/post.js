@@ -4,16 +4,45 @@ const router = express.Router();
 //importamos el modelo del post
 import Post from "../models/post";
 import Usuario from "../models/usuario";
-import { fstat } from "fs";
+//import { fstat } from "fs";
+//import { builtinModules } from "module";
 const { verificar_auth } = require("../middleware/autenticacion");
 
 //agregar un nuevo post
-router.post("/nuevo_post", verificar_auth, async (req, res) => {
+/*router.post("/nuevo_post", verificar_auth, async (req, res) => {
   const body = req.body;
-
   //agregar el id del usuario ya logueado
   body.id_usuario = req.usuario._id;
   body.nombre_usuario = req.usuario.nombre_usuario;
+
+
+
+  try {
+    const postDB = await Post.create(body);
+    res.status(200).json(postDB);
+  } catch (error) {
+    return res.status(500).json({
+      mensaje: "Ocurrio un error",
+      error
+    });
+  }
+});
+*/
+router.post("/nuevo_post", verificar_auth, async (req, res) => {
+  const body = req.body;
+  //var body = req.body
+  //agregar el id del usuario ya logueado
+  body.id_usuario = req.usuario._id;
+  body.nombre_usuario = req.usuario.nombre_usuario;
+
+  let upload_image = req.files.upload_image;
+  //con esto guarda pero da error
+  //upload_image.mv("./images/" + upload_image.name);
+  upload_image.mv("./public/uploads/" + upload_image.name);
+  res.send("Imagen cargada");
+  body.imagen = upload_image.name;
+  //var imagen = upload_image.name;
+
   try {
     const postDB = await Post.create(body);
     res.status(200).json(postDB);
@@ -26,7 +55,7 @@ router.post("/nuevo_post", verificar_auth, async (req, res) => {
 });
 
 //cargar la imagen en el servidor
-router.post("/uploads", async (req, res) => {
+/*router.post("/uploads", async (req, res) => {
   try {
     if (!req.files) {
       res.send({
@@ -44,7 +73,7 @@ router.post("/uploads", async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
-});
+});*/
 
 // Get de todos los post
 router.get("/get_post", async (req, res) => {
