@@ -9,7 +9,6 @@ const options = {
   useCreateIndex: true,
   useUnifiedTopology: true
 };
-
 const app = express();
 
 const fileUpload = require("express-fileupload");
@@ -30,7 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Habilita que se puedan cargar los archivos
 app.use(fileUpload());
-app.use(express.static(path.resolve(__dirname + "../public/uploads")));
+app.use(express.static(path.resolve(__dirname + "public/uploads")));
 
 //rutas
 
@@ -39,7 +38,7 @@ app.use(require("./routes/login"));
 app.use(require("./routes/post_sugerencia"));
 app.use(require("./routes/post"));
 app.use(require("./routes/comentario"));
-
+app.use(require("./routes/upload"));
 //middleware para vue.js del modo history
 const history = require("connect-history-api-fallback");
 app.use(history());
